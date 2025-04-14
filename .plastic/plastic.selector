@@ -1,4 +1,0 @@
-repository "Duntris 2025-01-22_16-02-26/Duntris@2474499016082@cloud"
-  path "/"
-    br "/main"
-    co "/main"
