@@ -46,5 +46,11 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.forward = Vector3.Lerp(transform.forward, targetVelocity.normalized, deceleration * Time.fixedDeltaTime);
         }
+
+        // Lock Y position to ground level (use whatever Y height is appropriate, like 0)
+        Vector3 pos = rb.position;
+        pos.y = 1.2f;
+        rb.position = pos;
+
     }
 }
