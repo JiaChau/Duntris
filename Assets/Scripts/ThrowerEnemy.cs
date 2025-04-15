@@ -7,6 +7,7 @@ public class ThrowerEnemy : BaseEnemy
     public float throwCooldown = 2f;
     public float preferredDistance = 10f;
     private float throwTimer;
+    [SerializeField] private AudioClip shotySoundClip;
 
     protected override void Update()
     {
@@ -61,6 +62,8 @@ public class ThrowerEnemy : BaseEnemy
         float heightOffset = Mathf.Clamp(distance * 0.1f, 0.5f, 2f);
 
         Vector3 baseSpawn = transform.position + direction * 0.75f + Vector3.up * heightOffset;
+        // audio
+        AudioSource.PlayClipAtPoint(shotySoundClip, transform.position, 1f);
 
         Vector3 right = Vector3.Cross(Vector3.up, direction);
         Vector3[] offsets = new Vector3[]
@@ -77,6 +80,7 @@ public class ThrowerEnemy : BaseEnemy
             Vector3 spawnPos = baseSpawn + offset;
             SpawnEnemyProjectile(spawnPos, direction);
         }
+        
     }
 
     void SpawnEnemyProjectile(Vector3 spawnPos, Vector3 direction)

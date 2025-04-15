@@ -5,7 +5,9 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
     public GameObject gameOverUI;
     private PlayerStats stats;
-
+    [SerializeField] private AudioClip hurtSoundClip;
+    [SerializeField] private AudioClip HealSoundClip;
+    [SerializeField] private AudioClip deadSoundClip;
     void Start()
     {
         stats = PlayerStatsManager.Instance.stats;
@@ -13,7 +15,9 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public void TakeDamage(float amount)
-    {
+    {   // plays audio
+        AudioSource.PlayClipAtPoint(hurtSoundClip, transform.position, 0.5f);
+
         currentHealth -= amount;
         RepelEnemies();
 
@@ -35,7 +39,9 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public void Heal(float amount, bool increaseMax = false)
-    {
+    {   // audio
+        AudioSource.PlayClipAtPoint(HealSoundClip, transform.position, 1f);
+
         if (increaseMax)
             stats.maxHealth += amount;
 
@@ -44,7 +50,9 @@ public class PlayerHealth : MonoBehaviour
     }
 
     void GameOver()
-    {
+    {   // audio
+        AudioSource.PlayClipAtPoint(deadSoundClip, transform.position, 2f);
+
         ApplyStatPenalty();
         gameOverUI.SetActive(true);
         Time.timeScale = 0f;

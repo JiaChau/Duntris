@@ -176,3 +176,4 @@ MonoBehaviour:
   moveSpeed: 1
   attackRange: 2
   attackCooldown: 1.5
+  punchSoundClip: {fileID: 8300000, guid: c566605f07cf6ab4b8d7db9061b327df, type: 3}

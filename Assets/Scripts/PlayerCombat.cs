@@ -4,6 +4,8 @@ public class PlayerCombat : MonoBehaviour
 {
     public GameObject playerProjectilePrefab;
     private PlayerStats stats;
+    [SerializeField] private AudioClip punchSoundClip;
+    [SerializeField] private AudioClip blasterSoundClip;
 
     void Start()
     {
@@ -21,6 +23,8 @@ public class PlayerCombat : MonoBehaviour
     void MeleeAttack()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, stats.meleeRange, LayerMask.GetMask("Enemy"));
+        //audio
+        AudioSource.PlayClipAtPoint(punchSoundClip, transform.position, 1f);
 
         foreach (var hit in hits)
         {
@@ -46,6 +50,7 @@ public class PlayerCombat : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane ground = new Plane(Vector3.up, transform.position);
+        AudioSource.PlayClipAtPoint(blasterSoundClip, transform.position, 1f);
 
         if (ground.Raycast(ray, out float dist))
         {

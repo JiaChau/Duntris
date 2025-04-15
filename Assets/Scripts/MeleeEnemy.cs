@@ -5,6 +5,7 @@ public class MeleeEnemy : BaseEnemy
     public float attackRange = 2f;
     public float attackCooldown = 1.5f;
     private float attackTimer;
+    [SerializeField] private AudioClip punchSoundClip;
 
     protected override void Update()
     {
@@ -19,6 +20,7 @@ public class MeleeEnemy : BaseEnemy
             Vector3 toPlayer = (player.position - transform.position).normalized;
             Vector3 stopPoint = player.position - toPlayer * (attackRange - 0.2f);
             agent.SetDestination(stopPoint);
+            
         }
         else
         {
@@ -29,6 +31,7 @@ public class MeleeEnemy : BaseEnemy
         {
             player.GetComponent<PlayerHealth>()?.TakeDamage(damage);
             attackTimer = attackCooldown;
+            AudioSource.PlayClipAtPoint(punchSoundClip, transform.position, 0.1f);
         }
 
         attackTimer -= Time.deltaTime;
