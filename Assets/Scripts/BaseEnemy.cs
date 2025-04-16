@@ -13,6 +13,8 @@ public class BaseEnemy : MonoBehaviour
     private bool isStunned = false;
     private float stunTimer = 0f;
 
+    public event System.Action OnDeath;
+
     public virtual void Stun(float duration)
     {
         isStunned = true;
@@ -56,6 +58,7 @@ public class BaseEnemy : MonoBehaviour
 
     protected virtual void Die()
     {
+        OnDeath?.Invoke();
         Destroy(gameObject);
     }
 
