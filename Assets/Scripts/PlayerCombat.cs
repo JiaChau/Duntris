@@ -4,8 +4,10 @@ public class PlayerCombat : MonoBehaviour
 {
     public GameObject playerProjectilePrefab;
     private PlayerStats stats;
-    [SerializeField] private AudioClip punchSoundClip;
-    [SerializeField] private AudioClip blasterSoundClip;
+
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource punchSource;   // 근접 공격 사운드
+    [SerializeField] private AudioSource blasterSource; // 원거리 사운드
 
     void Start()
     {
@@ -20,71 +22,69 @@ public class PlayerCombat : MonoBehaviour
             RangedAttack();
     }
 
+    /* ───────── 근접 공격 ───────── */
     void MeleeAttack()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, stats.meleeRange, LayerMask.GetMask("Enemy"));
-        //audio
-        AudioSource.PlayClipAtPoint(punchSoundClip, transform.position, 1f);
+        // 사운드
+        punchSource?.PlayOneShot(punchSource.clip, 1f);  // 겹쳐 재생 가능
+
+        // 데미지 판정
+        var hits = Physics.OverlapSphere(transform.position,
+                                         stats.meleeRange,
+                                         LayerMask.GetMask("Enemy"));
 
         foreach (var hit in hits)
         {
-            BaseEnemy enemy = hit.GetComponent<BaseEnemy>();
-            if (enemy != null)
+            if (hit.TryGetComponent(out BaseEnemy enemy))
             {
-
                 enemy.TakeDamage(stats.meleeDamage);
-                // Optional: visual indicator
-                Debug.DrawRay(hit.transform.position, Vector3.up * 2f, Color.yellow, 0.2f); // flashes upward line on hit
+                enemy.Stun(0.3f);
 
-                enemy.Stun(0.3f); // Half-second stun
+                // 시각 피드백
+                Debug.DrawRay(hit.transform.position, Vector3.up * 2f,
+                              Color.yellow, 0.2f);
             }
         }
-
         Debug.Log("Player melee attack triggered.");
-
-        // Optional: Visual effect, animation, or sound
     }
 
-
+    /* ───────── 원거리 공격 ───────── */
     void RangedAttack()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray   ray    = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane ground = new Plane(Vector3.up, transform.position);
-        AudioSource.PlayClipAtPoint(blasterSoundClip, transform.position, 1f);
 
-        if (ground.Raycast(ray, out float dist))
+        if (!ground.Raycast(ray, out float dist)) return;
+
+        // 사운드
+        blasterSource?.PlayOneShot(blasterSource.clip, 1f);
+
+        // 발사 방향 계산
+        Vector3 target   = ray.GetPoint(dist);
+        Vector3 dir      = (target - transform.position).normalized;
+        Vector3 spawnPos = transform.position + dir * 0.25f;
+
+        // 투사체 생성
+        GameObject proj = Instantiate(playerProjectilePrefab, spawnPos,
+                                      Quaternion.identity);
+
+        if (proj.TryGetComponent(out Rigidbody rb))
         {
-            Vector3 target = ray.GetPoint(dist);
-            Vector3 dir = (target - transform.position).normalized;
+            rb.useGravity = false;
+            rb.velocity   = dir * stats.projectileSpeed;
+        }
 
-            Vector3 spawnPos = transform.position + dir * 0.25f; // closer, no height
-
-            GameObject proj = Instantiate(playerProjectilePrefab, spawnPos, Quaternion.identity);
-            Rigidbody rb = proj.GetComponent<Rigidbody>();
-
-            if (rb != null)
-            {
-                rb.useGravity = false;
-                rb.velocity = dir * stats.projectileSpeed;
-            }
-
-            Projectile p = proj.GetComponent<Projectile>();
-            if (p != null)
-            {
-                p.damage = stats.rangedDamage;
-                p.targetTag = "Enemy";
-            }
-
+        if (proj.TryGetComponent(out Projectile p))
+        {
+            p.damage    = stats.rangedDamage;
+            p.targetTag = "Enemy";
         }
     }
 
     void OnDrawGizmosSelected()
     {
-        if (stats != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, stats.meleeRange);
-        }
+        if (stats == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, stats.meleeRange);
     }
-
 }

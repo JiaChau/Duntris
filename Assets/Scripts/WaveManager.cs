@@ -1,6 +1,8 @@
 using UnityEngine;
+using TMPro;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic; // Add this to use List<T>
+
 
 public class WaveManager : MonoBehaviour
 {
@@ -32,6 +34,11 @@ public class WaveManager : MonoBehaviour
     public static float timeSpentInRoom = 0f;
 
     private RoomExit roomExit;
+
+    [Header("UI References")]
+    public TMP_Text waveClearedText;
+    public TMP_Text finalWaveText;
+    public TMP_Text exitUnlockedText;
 
     void Start()
     {
@@ -72,7 +79,6 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(StartFirstWave());
     }
 
-
     void Update()
     {
         timeSpentInRoom += Time.deltaTime;
@@ -84,6 +90,7 @@ public class WaveManager : MonoBehaviour
             if (currentWave < waves.Length)
             {
                 StartCoroutine(SpawnWave());
+                ShowWaveClearedPopup(); // Show "Wave Cleared" message
             }
             else
             {
@@ -92,8 +99,10 @@ public class WaveManager : MonoBehaviour
                 if (roomExit != null)
                 {
                     roomExit.UnlockExit(); // Unlocks and activates the beam
+                    ShowExitUnlockedMessage(); // Show "Exit Unlocked" message
                 }
 
+                ShowFinalWaveMessage(); // Show "Final Wave!" message
                 Debug.Log("Room cleared in " + timeSpentInRoom.ToString("F2") + " seconds.");
                 Debug.Log("Enemies defeated so far: " + totalEnemiesKilled);
             }
@@ -151,5 +160,36 @@ public class WaveManager : MonoBehaviour
     {
         enemiesAlive--;
         totalEnemiesKilled++;
+    }
+
+    // Show the "Wave Cleared" message
+    void ShowWaveClearedPopup()
+    {
+        waveClearedText.gameObject.SetActive(true);
+        waveClearedText.text = "Wave Cleared!";
+        StartCoroutine(HideWaveMessage(waveClearedText));
+    }
+
+    // Show the "Final Wave!" message
+    void ShowFinalWaveMessage()
+    {
+        finalWaveText.gameObject.SetActive(true);
+        finalWaveText.text = "Final Wave!";
+        StartCoroutine(HideWaveMessage(finalWaveText));
+    }
+
+    // Show the "Exit Unlocked" message
+    void ShowExitUnlockedMessage()
+    {
+        exitUnlockedText.gameObject.SetActive(true);
+        exitUnlockedText.text = "Exit Unlocked!";
+        StartCoroutine(HideWaveMessage(exitUnlockedText));
+    }
+
+    // Hide the message after 2 seconds
+    IEnumerator HideWaveMessage(TMP_Text message)
+    {
+        yield return new WaitForSeconds(2f);
+        message.gameObject.SetActive(false);
     }
 }

@@ -2,35 +2,43 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public static PlayerHealth Instance { get; private set; }
+
     public float currentHealth;
     private PlayerStats stats;
 
-    [SerializeField] private AudioClip hurtSoundClip;
-    [SerializeField] private AudioClip HealSoundClip;
-    [SerializeField] private AudioClip deadSoundClip;
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource hurtSource;
+    [SerializeField] private AudioSource healSource;
+    [SerializeField] private AudioSource deadSource;
+
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
     void Start()
     {
-        stats = PlayerStatsManager.Instance.stats;
+        stats         = PlayerStatsManager.Instance.stats;
         currentHealth = stats.maxHealth;
     }
 
     public void TakeDamage(float amount)
     {
-        AudioSource.PlayClipAtPoint(hurtSoundClip, transform.position, 0.5f);
+        if (hurtSource) hurtSource.PlayOneShot(hurtSource.clip, 0.5f);
 
         currentHealth -= amount;
         RepelEnemies();
 
-        if (currentHealth <= 0)
-            GameOver();
+        if (currentHealth <= 0) GameOver();
     }
 
     void RepelEnemies()
     {
         float repelRadius = 5f;
-        float repelForce = 10f;
-        Collider[] enemies = Physics.OverlapSphere(transform.position, repelRadius, LayerMask.GetMask("Enemy"));
+        float repelForce  = 10f;
+        var enemies = Physics.OverlapSphere(transform.position, repelRadius, LayerMask.GetMask("Enemy"));
 
         foreach (var enemy in enemies)
         {
@@ -41,31 +49,23 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(float amount, bool increaseMax = false)
     {
-        AudioSource.PlayClipAtPoint(HealSoundClip, transform.position, 1f);
+        if (healSource) healSource.PlayOneShot(healSource.clip, 1f);
 
-        if (increaseMax)
-            stats.maxHealth += amount;
+        if (increaseMax) stats.maxHealth += amount;
 
-        currentHealth += amount;
-        currentHealth = Mathf.Min(currentHealth, stats.maxHealth);
+        currentHealth  = Mathf.Min(currentHealth + amount, stats.maxHealth);
     }
 
     void GameOver()
     {
-        AudioSource.PlayClipAtPoint(deadSoundClip, transform.position, 2f);
+        if (deadSource) deadSource.PlayOneShot(deadSource.clip, 2f);
 
         ApplyStatPenalty();
 
-        // Show new end screen instead of old game over UI
-        EndGameUI endUI = FindObjectOfType<EndGameUI>();
-        if (endUI != null)
-        {
+        if (FindObjectOfType<EndGameUI>() is EndGameUI endUI)
             endUI.ShowEndScreen();
-        }
         else
-        {
             Debug.LogWarning("EndGameUI not found in scene.");
-        }
 
         Time.timeScale = 0f;
     }
