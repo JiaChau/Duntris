@@ -46,6 +46,6 @@ public class EndGameUI : MonoBehaviour
     // Load the main menu scene (adjust as needed)
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");  // Replace "MainMenu" with the actual name of your main menu scene
+        SceneManager.LoadScene("Menu");  // Replace "MainMenu" with the actual name of your main menu scene
     }
 }
