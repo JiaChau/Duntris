@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
+    public static int floorIndex = 0;
+
     [System.Serializable]
     public class RoomTheme
     {
@@ -35,8 +37,11 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
+        WaveManager.totalRunTime = 0f;
+
         SetThemeForFloor();
         LoadNextRoom();
+
     }
 
     private void SetThemeForFloor()
@@ -50,10 +55,10 @@ public class RoomManager : MonoBehaviour
     {
         if (currentRoom != null)
         {
-            Destroy(currentRoom);  // Destroy previous room
+            Destroy(currentRoom);
         }
 
-        SetThemeForFloor();  // Update theme based on floor
+        SetThemeForFloor();
 
         RoomType roomType = roomPattern[currentFloor % roomPattern.Length];
         GameObject selectedRoomPrefab = GetRoomPrefabByType(roomType);
@@ -63,10 +68,36 @@ public class RoomManager : MonoBehaviour
         PositionPlayer();
         HandleExitVisibility(roomType);
 
+        floorIndex = currentFloor;
+        Debug.Log($"Entering Floor {floorIndex}: {roomType}");
         currentFloor++;
 
-        Debug.Log($"Entering Floor {currentFloor}: {roomType}");
+        // Timer control logic
+        HUD hud = FindObjectOfType<HUD>();
+        if (hud != null)
+        {
+            bool isCombatRoom = roomType == RoomType.Combat1 || roomType == RoomType.Combat2 ||
+                                roomType == RoomType.Combat3 || roomType == RoomType.Combat4 ||
+                                roomType == RoomType.Combat5;
+
+            hud.EnableRoomTimer(isCombatRoom);
+        }
+
+        // Show Buff UI if in a buff (crafting) room
+        BuffStatsUI buffUI = FindObjectOfType<BuffStatsUI>();
+        if (buffUI != null)
+        {
+            bool isBuffRoom = roomType == RoomType.Crafting;
+            buffUI.ShowStatsPanel(isBuffRoom);
+
+            if (isBuffRoom)
+            {
+                buffUI.UpdateStats(PlayerStatsManager.Instance.stats);
+            }
+        }
     }
+
+
 
     private GameObject GetRoomPrefabByType(RoomType roomType)
     {

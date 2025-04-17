@@ -1,11 +1,20 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
-using System.Collections.Generic; // Add this to use List<T>
-
+using System.Collections.Generic;
 
 public class WaveManager : MonoBehaviour
 {
+    // Wave tracking for UI
+    public static int CurrentWaveIndex { get; set; }
+    public static int RemainingWaves { get; set; }
+    public static int TotalWavesInRoom { get; set; }
+
+
+    public static float roomTime = 0f;
+    public static float totalRunTime = 0f;
+
+
     [Header("Enemy Prefabs")]
     public GameObject meleePrefab;
     public GameObject throwerPrefab;
@@ -24,6 +33,11 @@ public class WaveManager : MonoBehaviour
     [Header("Wave Definitions")]
     public Wave[] waves;
 
+    [Header("UI References")]
+    public TMP_Text waveClearedText;
+    public TMP_Text finalWaveText;
+    public TMP_Text exitUnlockedText;
+
     private Transform[] spawnPoints;
     private int currentWave = 0;
     private int enemiesAlive = 0;
@@ -35,23 +49,19 @@ public class WaveManager : MonoBehaviour
 
     private RoomExit roomExit;
 
-    [Header("UI References")]
-    public TMP_Text waveClearedText;
-    public TMP_Text finalWaveText;
-    public TMP_Text exitUnlockedText;
-
     void Start()
     {
         timeSpentInRoom = 0f;
+        roomTime = 0f; // Reset room timer
 
-        // Find the ExitBeam GameObject manually
+        // Find ExitBeam in room
         Transform exitBeamTransform = transform.Find("ExitBeam");
         if (exitBeamTransform != null)
         {
             roomExit = exitBeamTransform.GetComponent<RoomExit>();
             if (roomExit != null)
             {
-                roomExit.HideExit(); // Hide exit at start
+                roomExit.HideExit();
             }
             else
             {
@@ -82,29 +92,47 @@ public class WaveManager : MonoBehaviour
     void Update()
     {
         timeSpentInRoom += Time.deltaTime;
+        totalRunTime += Time.deltaTime;
+        roomTime += Time.deltaTime;
+
 
         if (waveFullySpawned && enemiesAlive == 0 && !spawning)
         {
-            currentWave++;
-
-            if (currentWave < waves.Length)
+            if (currentWave < waves.Length - 1)
             {
+                currentWave++;
+                RemainingWaves = Mathf.Max(waves.Length - currentWave, 0);
+                CurrentWaveIndex = waves.Length - 1;
+
                 StartCoroutine(SpawnWave());
-                ShowWaveClearedPopup(); // Show "Wave Cleared" message
+                StartCoroutine(ShowPopupSequence(new string[] { "Wave Cleared!" }));
             }
             else
             {
+                // Last wave just completed
+                RemainingWaves = 0;
+                CurrentWaveIndex = waves.Length - 1;
+
                 Debug.Log("All waves cleared.");
 
                 if (roomExit != null)
                 {
-                    roomExit.UnlockExit(); // Unlocks and activates the beam
-                    ShowExitUnlockedMessage(); // Show "Exit Unlocked" message
+                    roomExit.UnlockExit();
                 }
 
-                ShowFinalWaveMessage(); // Show "Final Wave!" message
-                Debug.Log("Room cleared in " + timeSpentInRoom.ToString("F2") + " seconds.");
-                Debug.Log("Enemies defeated so far: " + totalEnemiesKilled);
+                HUD hud = FindObjectOfType<HUD>();
+                if (hud != null)
+                {
+                    hud.StopTimer();
+                }
+
+                StartCoroutine(ShowPopupSequence(new string[]
+                {
+            "Final Wave Cleared!",
+            "Exit Unlocked!",
+            "Room cleared in " + timeSpentInRoom.ToString("F2") + " seconds",
+            "Enemies defeated: " + totalEnemiesKilled
+                }));
             }
 
             waveFullySpawned = false;
@@ -113,6 +141,10 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator StartFirstWave()
     {
+        RemainingWaves = waves.Length;
+        TotalWavesInRoom = waves.Length;
+        CurrentWaveIndex = 0;
+
         yield return new WaitForSeconds(delayBeforeStart);
         yield return StartCoroutine(SpawnWave());
     }
@@ -162,34 +194,27 @@ public class WaveManager : MonoBehaviour
         totalEnemiesKilled++;
     }
 
-    // Show the "Wave Cleared" message
-    void ShowWaveClearedPopup()
+    IEnumerator ShowPopupSequence(string[] messages)
     {
-        waveClearedText.gameObject.SetActive(true);
-        waveClearedText.text = "Wave Cleared!";
-        StartCoroutine(HideWaveMessage(waveClearedText));
-    }
+        TMP_Text[] popupTargets = new TMP_Text[]
+        {
+            finalWaveText,
+            exitUnlockedText,
+            waveClearedText
+        };
 
-    // Show the "Final Wave!" message
-    void ShowFinalWaveMessage()
-    {
-        finalWaveText.gameObject.SetActive(true);
-        finalWaveText.text = "Final Wave!";
-        StartCoroutine(HideWaveMessage(finalWaveText));
-    }
+        int popupIndex = 0;
 
-    // Show the "Exit Unlocked" message
-    void ShowExitUnlockedMessage()
-    {
-        exitUnlockedText.gameObject.SetActive(true);
-        exitUnlockedText.text = "Exit Unlocked!";
-        StartCoroutine(HideWaveMessage(exitUnlockedText));
-    }
+        foreach (string message in messages)
+        {
+            TMP_Text target = popupTargets[Mathf.Min(popupIndex, popupTargets.Length - 1)];
+            target.text = message;
+            target.gameObject.SetActive(true);
 
-    // Hide the message after 2 seconds
-    IEnumerator HideWaveMessage(TMP_Text message)
-    {
-        yield return new WaitForSeconds(2f);
-        message.gameObject.SetActive(false);
+            yield return new WaitForSeconds(1.75f);
+
+            target.gameObject.SetActive(false);
+            popupIndex++;
+        }
     }
 }

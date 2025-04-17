@@ -1,7 +1,7 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;   // 씬 전환
+using UnityEngine.SceneManagement;   // For scene transitions
 #if UNITY_EDITOR
-using UnityEditor;                  // 에디터 종료용(빌드엔 포함 X)
+using UnityEditor;                  // For quitting play mode in editor
 #endif
 
 public class MainMenuUI : MonoBehaviour
@@ -9,15 +9,30 @@ public class MainMenuUI : MonoBehaviour
     // “Play” 버튼에서 호출
     public void PlayGame()
     {
-        SceneManager.LoadScene("Game");   // 본편 씬 이름으로 교체
+        // Ensure time isn't frozen from previous game over
+        Time.timeScale = 1f;
+
+        // Reset static data from previous run
+        WaveManager.CurrentWaveIndex = 0;
+        WaveManager.RemainingWaves = 0;
+        WaveManager.TotalWavesInRoom = 0;
+        WaveManager.totalEnemiesKilled = 0;
+        WaveManager.timeSpentInRoom = 0f;
+        WaveManager.roomTime = 0f;
+        WaveManager.totalRunTime = 0f;
+
+        RoomManager.floorIndex = 0;
+
+        // Load game scene (replace with actual gameplay scene name)
+        SceneManager.LoadScene("Game");
     }
 
     // “Quit” 버튼에서 호출
     public void QuitGame()
     {
-        Application.Quit();                    // 빌드 실행 시 종료 :contentReference[oaicite:0]{index=0}
+        Application.Quit(); // For builds
 #if UNITY_EDITOR
-        EditorApplication.isPlaying = false;   // 에디터 상태일 때는 Play 모드만 해제
+        EditorApplication.isPlaying = false; // Stop play mode in editor
 #endif
     }
 }

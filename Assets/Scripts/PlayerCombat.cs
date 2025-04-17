@@ -20,7 +20,26 @@ public class PlayerCombat : MonoBehaviour
             MeleeAttack();
         if (Input.GetMouseButtonDown(1))
             RangedAttack();
+
+        // Cheat key: press backtick ` to clear all enemies
+        if (Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            ClearAllEnemies();
+        }
     }
+
+    void ClearAllEnemies()
+    {
+        BaseEnemy[] allEnemies = FindObjectsOfType<BaseEnemy>();
+        Debug.Log("Clearing " + allEnemies.Length + " enemies from the room.");
+
+        foreach (var enemy in allEnemies)
+        {
+            enemy.TakeDamage(9999f); // massive damage to kill any enemy
+        }
+    }
+
+
 
     /* ───────── 근접 공격 ───────── */
     void MeleeAttack()

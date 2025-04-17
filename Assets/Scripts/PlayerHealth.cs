@@ -67,8 +67,12 @@ public class PlayerHealth : MonoBehaviour
         else
             Debug.LogWarning("EndGameUI not found in scene.");
 
+        // Stop the HUD timer
+        FindObjectOfType<HUD>()?.StopTimer();
+
         Time.timeScale = 0f;
     }
+
 
     void ApplyStatPenalty()
     {
