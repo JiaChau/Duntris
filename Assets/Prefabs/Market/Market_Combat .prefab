@@ -1345,8 +1345,11 @@ MonoBehaviour:
   delayBeforeStart: 0.5
   waves:
   - numMelee: 2
+    numThrowers: 3
+    spawnRate: 2
+  - numMelee: 3
     numThrowers: 2
-    spawnRate: 1
+    spawnRate: 2
   waveClearedText: {fileID: 9127373699128235223}
   finalWaveText: {fileID: 217691111123877175}
   exitUnlockedText: {fileID: 7473036802961436521}

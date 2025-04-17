@@ -86,12 +86,12 @@ MonoBehaviour:
   throwerPrefab: {fileID: 6443889621358442809, guid: 633ed09d6a4e0e94aacd50dcd7303767, type: 3}
   delayBeforeStart: 0.5
   waves:
-  - numMelee: 3
+  - numMelee: 1
     numThrowers: 2
-    spawnRate: 2
-  - numMelee: 2
-    numThrowers: 2
-    spawnRate: 2
+    spawnRate: 3
+  - numMelee: 4
+    numThrowers: 1
+    spawnRate: 3
   waveClearedText: {fileID: 8836035103998102809}
   finalWaveText: {fileID: 1513775409495745887}
   exitUnlockedText: {fileID: 5440099216883178695}

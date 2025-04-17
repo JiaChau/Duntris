@@ -222,7 +222,10 @@ MonoBehaviour:
   waves:
   - numMelee: 2
     numThrowers: 2
-    spawnRate: 1
+    spawnRate: 3
+  - numMelee: 4
+    numThrowers: 2
+    spawnRate: 3
   waveClearedText: {fileID: 7875117160746315629}
   finalWaveText: {fileID: 8679787066345968686}
   exitUnlockedText: {fileID: 3979806223897129655}

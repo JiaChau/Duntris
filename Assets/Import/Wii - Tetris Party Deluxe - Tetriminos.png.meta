@@ -1,0 +1,633 @@
+fileFormatVersion: 2
+guid: c60a9fe98fa843e489644678ffd73e3c
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 367.5714
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c176090d0121fd4a9a36696c5e207b4
+      internalID: -561586554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 367.5714
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6376ebb056e868428dbd93db2f01f6f
+      internalID: 463150448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 367.5714
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9b2020fcd1d38c42942c65e92a0ad8c
+      internalID: 1217349236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 367.5714
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 244f1687d9e2b8f46af3c019547ceb29
+      internalID: 513257180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 294.5714
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c08a23eb2b912cc4bb1c814c3df0bde5
+      internalID: -174531238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 294.5714
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c0b73f2da722084092c87f68adf6ea7
+      internalID: 386067437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_6
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 294.5714
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2571bd2d6764f52488cf82bd1b9a17ff
+      internalID: -193455003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_7
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 294.5714
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c74f605eeb5ece349806087e3b6d9421
+      internalID: -1537125164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 221.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25eb07626e7a4d245ac68a964af87550
+      internalID: 250706817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_9
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 221.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21414e5fbd2f14c498088a7ca146427d
+      internalID: -1459907586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_10
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 221.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dfe49b45978d954aa1d5504cc90fb12
+      internalID: 1045779591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_11
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 221.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6abedee655bce374fb0110e88071370a
+      internalID: -692978488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 148.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79fd510f85c4609479f2a43410e2ce6c
+      internalID: 1324959681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_13
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 148.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5a78ba9071224d409eb7c890b262fcf
+      internalID: -394472665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_14
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 148.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb8d59721d7193144b09f27e94ec93e8
+      internalID: -1333827009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_15
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 148.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d5976fcb0fc50e498ad7578cdc13501
+      internalID: -1550719843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 75.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65eeae99c862f424db7568b3da8d2300
+      internalID: -148848634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_17
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 75.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95840cfe70bcb7c4bb9444ff51a8e3ab
+      internalID: 2056711352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_18
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 75.57143
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eea74980f8490aa46986cb03f337f891
+      internalID: -126475256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2.5714264
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 189a675f94233dd40912aaa42e3622aa
+      internalID: -1777776266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_20
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 2.5714264
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a536feac3c8189b4a844cc7b9c1d4820
+      internalID: -1968508062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_21
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 2.5714264
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0cf26e441710da499fdfa7ac5ca78da
+      internalID: -951960366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wii - Tetris Party Deluxe - Tetriminos_22
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 2.5714264
+        width: 64.5
+        height: 73.42857
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 596eae98ca752af4292398550ed93825
+      internalID: 173694319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 41ece110111261a4098600690300fc69
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Wii - Tetris Party Deluxe - Tetriminos_0: -561586554
+      Wii - Tetris Party Deluxe - Tetriminos_1: 463150448
+      Wii - Tetris Party Deluxe - Tetriminos_10: 1045779591
+      Wii - Tetris Party Deluxe - Tetriminos_11: -692978488
+      Wii - Tetris Party Deluxe - Tetriminos_12: 1324959681
+      Wii - Tetris Party Deluxe - Tetriminos_13: -394472665
+      Wii - Tetris Party Deluxe - Tetriminos_14: -1333827009
+      Wii - Tetris Party Deluxe - Tetriminos_15: -1550719843
+      Wii - Tetris Party Deluxe - Tetriminos_16: -148848634
+      Wii - Tetris Party Deluxe - Tetriminos_17: 2056711352
+      Wii - Tetris Party Deluxe - Tetriminos_18: -126475256
+      Wii - Tetris Party Deluxe - Tetriminos_19: -1777776266
+      Wii - Tetris Party Deluxe - Tetriminos_2: 1217349236
+      Wii - Tetris Party Deluxe - Tetriminos_20: -1968508062
+      Wii - Tetris Party Deluxe - Tetriminos_21: -951960366
+      Wii - Tetris Party Deluxe - Tetriminos_22: 173694319
+      Wii - Tetris Party Deluxe - Tetriminos_3: 513257180
+      Wii - Tetris Party Deluxe - Tetriminos_4: -174531238
+      Wii - Tetris Party Deluxe - Tetriminos_5: 386067437
+      Wii - Tetris Party Deluxe - Tetriminos_6: -193455003
+      Wii - Tetris Party Deluxe - Tetriminos_7: -1537125164
+      Wii - Tetris Party Deluxe - Tetriminos_8: 250706817
+      Wii - Tetris Party Deluxe - Tetriminos_9: -1459907586
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
