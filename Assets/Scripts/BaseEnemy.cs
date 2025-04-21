@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class BaseEnemy : MonoBehaviour
 {
@@ -21,11 +22,8 @@ public class BaseEnemy : MonoBehaviour
         stunTimer = duration;
 
         if (agent != null && agent.isOnNavMesh)
-        {
             agent.isStopped = true;
-        }
     }
-
 
     protected virtual void Update()
     {
@@ -51,13 +49,35 @@ public class BaseEnemy : MonoBehaviour
     {
         health -= amount;
         if (health <= 0f)
-        {
             Die();
-        }
     }
 
     protected virtual void Die()
     {
+        if (BlockInventoryUI.Instance != null && BlockInventory.Instance != null)
+        {
+            var shapes = BlockInventoryUI.Instance.GetAllShapes();
+            if (shapes.Count > 0)
+            {
+                int count = Random.Range(1, 3);
+                List<(string, int)> rewards = new();
+
+                for (int i = 0; i < count; i++)
+                {
+                    var randomShape = shapes[Random.Range(0, shapes.Count)];
+                    BlockInventory.Instance.AddBlock(randomShape.shapeName, 1);
+                    rewards.Add((randomShape.shapeName, 1));
+                    Debug.Log($"[DROP] Enemy dropped block: {randomShape.shapeName}");
+                }
+
+                BlockInventoryUI.Instance.UpdateAllCounts();
+
+                var popup = FindObjectOfType<BlockRewardPopupUI>();
+                if (popup != null)
+                    popup.ShowRewards(rewards);
+            }
+        }
+
         OnDeath?.Invoke();
         Destroy(gameObject);
     }

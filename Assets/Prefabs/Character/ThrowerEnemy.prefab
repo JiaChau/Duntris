@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d3cade15bffbd34468eeaa3ac6e03917, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,11 +151,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  damage: 10
+  damage: 7
   moveSpeed: 1
   enemyProjectilePrefab: {fileID: 1587543972769272885, guid: b84cb06d96d2fdc4d8e7d9da40fab7d7, type: 3}
-  throwCooldown: 2
-  preferredDistance: 10
+  throwCooldown: 2.5
+  preferredDistance: 8
   shotySoundClip: {fileID: 8300000, guid: 251c95d3af0022a41b72e9a439540640, type: 3}
 --- !u!195 &8697707662541178082
 NavMeshAgent:

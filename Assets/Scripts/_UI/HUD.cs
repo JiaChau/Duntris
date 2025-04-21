@@ -9,11 +9,12 @@ public class HUD : MonoBehaviour
     public TMP_Text waveIndicatorText;
     public TMP_Text timerText;
     public TMP_Text roomLabelText;
+
     public Slider healthBarSlider;
+    public TMP_Text healthText; // Add this in the inspector
+
     private bool isTimerActive = false;
-    public Canvas hudCanvas; // assign in Inspector
-
-
+    public Canvas hudCanvas;
 
     private void Update()
     {
@@ -27,12 +28,18 @@ public class HUD : MonoBehaviour
     void UpdateHealthBar()
     {
         float currentHealth = PlayerHealth.Instance.currentHealth;
+        float maxHealth = PlayerStatsManager.Instance.stats.maxHealth;
+
+        healthBarSlider.maxValue = maxHealth;
         healthBarSlider.value = currentHealth;
+
+        if (healthText != null)
+            healthText.text = $"{Mathf.CeilToInt(currentHealth)} / {Mathf.CeilToInt(maxHealth)}";
     }
 
     void UpdateKillCount()
     {
-        killsText.text = "Kills: " + WaveManager.totalEnemiesKilled.ToString();
+        killsText.text = "Kills: " + WaveManager.totalEnemiesKilled;
     }
 
     void UpdateWaveIndicator()
@@ -50,30 +57,18 @@ public class HUD : MonoBehaviour
 
     void UpdateRoomLabel()
     {
-        roomLabelText.text = "Floor: " + (RoomManager.floorIndex + 1); // Correct source for floor number
+        roomLabelText.text = "Floor: " + (RoomManager.floorIndex + 1);
     }
 
     public void EnableRoomTimer(bool enabled)
     {
         isTimerActive = enabled;
-
-        // Set placeholder text if timer is off
-        if (!enabled)
-        {
-            timerText.text = "Time: --.--";
-        }
-
-        // Toggle the whole HUD canvas visibility
-        if (hudCanvas != null)
-        {
-            hudCanvas.enabled = enabled;
-        }
+        if (!enabled) timerText.text = "Time: --.--";
+        if (hudCanvas != null) hudCanvas.enabled = enabled;
     }
 
     public void StopTimer()
     {
         isTimerActive = false;
     }
-
-
 }

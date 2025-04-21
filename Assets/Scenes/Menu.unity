@@ -96,7 +96,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 6623569ce03339d43ab930b20f3e0938, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 6ea746aa19d219441b7b9ce882ac107e, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -1932,8 +1932,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1480758032}
-  radius: 4
-  height: 3
+  radius: 5
+  height: 2.5
   angularSpeed: 3
 --- !u!45 &1571871900
 Skybox:

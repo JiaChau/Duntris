@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MoveSpeed
   m_EditorClassIdentifier: 
   statType: 1
-  amount: 2
+  amount: 0.3

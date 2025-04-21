@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f9fdef6daa778c4aaff68880f1b4dca, type: 3}
-  m_Name: MeleeRange
+  m_Name: MeleeRange 2
   m_EditorClassIdentifier: 
   statType: 2
-  amount: 2
+  amount: 1

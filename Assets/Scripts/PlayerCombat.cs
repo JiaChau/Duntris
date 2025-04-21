@@ -16,17 +16,19 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
+        if (GameUIManager.IsUIOpen) return;
+
         if (Input.GetMouseButtonDown(0))
             MeleeAttack();
         if (Input.GetMouseButtonDown(1))
             RangedAttack();
 
-        // Cheat key: press backtick ` to clear all enemies
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             ClearAllEnemies();
         }
     }
+
 
     void ClearAllEnemies()
     {
@@ -64,7 +66,6 @@ public class PlayerCombat : MonoBehaviour
                               Color.yellow, 0.2f);
             }
         }
-        Debug.Log("Player melee attack triggered.");
     }
 
     /* ───────── 원거리 공격 ───────── */

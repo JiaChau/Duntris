@@ -2,22 +2,24 @@ using UnityEngine;
 
 public class HealthPotion : MonoBehaviour
 {
-    public float healAmount = 20f;
-    public bool increasesMaxHealth = false;
+    public int minHealAmount = 10;
+    public int maxHealAmount = 25;
 
-    // Update this method
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player")) return;
+
+        int healAmount = Random.Range(minHealAmount, maxHealAmount + 1);
+
+        PlayerHealth.Instance.Heal(healAmount);
+
+        // Show healing popup if UI exists
+        var popup = FindObjectOfType<HealthGainPopupUI>();
+        if (popup != null)
         {
-            var health = other.GetComponent<PlayerHealth>();
-            health.Heal(healAmount, increasesMaxHealth);
-
-            string healType = increasesMaxHealth ? "Max HP & Current HP" : "Current HP";
-            Debug.Log($"Potion picked up: Healed {healAmount} ({healType})");
-
-            Destroy(gameObject);
+            popup.ShowHealAmount(healAmount);
         }
-    }
 
+        Destroy(gameObject);
+    }
 }

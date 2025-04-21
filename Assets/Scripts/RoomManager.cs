@@ -23,25 +23,25 @@ public class RoomManager : MonoBehaviour
     private int currentFloor = 0;
     private GameObject currentRoom;
 
-    // Define unique values in the enum
-    private enum RoomType { Combat1, Combat2, Healing, Combat3, Treasure, Combat4, Healing2, Combat5, Crafting, Tetris }
+    private enum RoomType { Combat1, Combat2, Healing, Combat3, Crafting, Combat4, Healing2, Combat5, Treasure, Tetris }
 
-    // Room pattern (to control room order)
     private RoomType[] roomPattern =
     {
         RoomType.Combat1, RoomType.Combat2, RoomType.Healing,
-        RoomType.Combat3, RoomType.Treasure, RoomType.Combat4,
-        RoomType.Healing2, RoomType.Combat5, RoomType.Crafting,
+        RoomType.Combat3, RoomType.Crafting, RoomType.Combat4,
+        RoomType.Healing2, RoomType.Combat5, RoomType.Treasure,
         RoomType.Tetris
     };
 
     private void Start()
     {
+#if UNITY_EDITOR
+          currentFloor = 28;
+#endif
         WaveManager.totalRunTime = 0f;
 
         SetThemeForFloor();
         LoadNextRoom();
-
     }
 
     private void SetThemeForFloor()
@@ -54,135 +54,98 @@ public class RoomManager : MonoBehaviour
     public void LoadNextRoom()
     {
         if (currentRoom != null)
-        {
             Destroy(currentRoom);
-        }
 
         SetThemeForFloor();
 
         RoomType roomType = roomPattern[currentFloor % roomPattern.Length];
         GameObject selectedRoomPrefab = GetRoomPrefabByType(roomType);
-
         currentRoom = Instantiate(selectedRoomPrefab, Vector3.zero, Quaternion.identity);
 
         PositionPlayer();
-        HandleExitVisibility(roomType);
+        RoomExit exitScript = HandleExitVisibility(roomType);
 
         floorIndex = currentFloor;
         Debug.Log($"Entering Floor {floorIndex}: {roomType}");
-        currentFloor++;
+        if (floorIndex < 29) currentFloor++;
 
-        // Timer control logic
         HUD hud = FindObjectOfType<HUD>();
         if (hud != null)
         {
-            bool isCombatRoom = roomType == RoomType.Combat1 || roomType == RoomType.Combat2 ||
-                                roomType == RoomType.Combat3 || roomType == RoomType.Combat4 ||
-                                roomType == RoomType.Combat5;
-
+            bool isCombatRoom = roomType.ToString().Contains("Combat");
             hud.EnableRoomTimer(isCombatRoom);
         }
 
-        // Show Buff UI if in a buff (crafting) room
         BuffStatsUI buffUI = FindObjectOfType<BuffStatsUI>();
         if (buffUI != null)
         {
-            bool isBuffRoom = roomType == RoomType.Crafting;
-            buffUI.ShowStatsPanel(isBuffRoom);
+            bool isCraftingRoom = roomType == RoomType.Crafting;
 
-            if (isBuffRoom)
-            {
+            buffUI.ShowStatsPanel(isCraftingRoom);
+
+            if (isCraftingRoom)
                 buffUI.UpdateStats(PlayerStatsManager.Instance.stats);
-            }
+        }
+
+
+        if (roomType == RoomType.Tetris && TetrisGameManager.Instance != null)
+        {
+            TetrisGameManager.Instance.currentRoomExit = exitScript;
+            if (exitScript != null) exitScript.gameObject.SetActive(false);
+            TetrisGameManager.Instance.StartSession();
         }
     }
 
-
-
     private GameObject GetRoomPrefabByType(RoomType roomType)
     {
-        switch (roomType)
+        return roomType switch
         {
-            case RoomType.Combat1:
-            case RoomType.Combat2:
-            case RoomType.Combat3:
-            case RoomType.Combat4:
-            case RoomType.Combat5:
-                return currentTheme.combatRoom;
-
-            case RoomType.Healing:
-            case RoomType.Healing2:
-                return currentTheme.healingRoom;
-
-            case RoomType.Treasure:
-                return currentTheme.treasureRoom;
-
-            case RoomType.Crafting:
-                return currentTheme.craftingRoom;
-
-            case RoomType.Tetris:
-                return currentTheme.tetrisRoom;
-
-            default:
-                Debug.LogError("Room type not found!");
-                return null;
-        }
+            RoomType.Combat1 or RoomType.Combat2 or RoomType.Combat3 or RoomType.Combat4 or RoomType.Combat5 => currentTheme.combatRoom,
+            RoomType.Healing or RoomType.Healing2 => currentTheme.healingRoom,
+            RoomType.Treasure => currentTheme.treasureRoom,
+            RoomType.Crafting => currentTheme.craftingRoom,
+            RoomType.Tetris => currentTheme.tetrisRoom,
+            _ => null,
+        };
     }
 
     private void PositionPlayer()
     {
         Transform entryPoint = currentRoom.transform.Find("EmptyWaypoint");
-
-        if (entryPoint != null)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (entryPoint != null && player != null)
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                player.transform.position = entryPoint.position;
-            }
+            player.transform.position = entryPoint.position;
         }
         else
         {
-            Debug.LogWarning("EmptyWaypoint not found in the room!");
+            Debug.LogWarning("Missing EmptyWaypoint or Player!");
         }
     }
 
-    private void HandleExitVisibility(RoomType roomType)
+    private RoomExit HandleExitVisibility(RoomType roomType)
     {
-        GameObject exitPoint = currentRoom.transform.Find("ExitBeam")?.gameObject;
+        GameObject exitObj = currentRoom.transform.Find("ExitBeam")?.gameObject;
+        RoomExit exitScript = exitObj?.GetComponent<RoomExit>();
 
-        if (exitPoint != null)
+        if (exitScript != null)
         {
-            RoomExit exitScript = exitPoint.GetComponent<RoomExit>();
+            bool isLockedRoom = roomType.ToString().Contains("Combat") || roomType == RoomType.Tetris;
+            if (isLockedRoom) exitScript.HideExit();
+            else exitScript.UnlockExit();
+        }
 
-            if (roomType == RoomType.Combat1 || roomType == RoomType.Combat2 || roomType == RoomType.Combat3 ||
-                roomType == RoomType.Combat4 || roomType == RoomType.Combat5 || roomType == RoomType.Tetris)
-            {
-                exitScript.HideExit(); // Hide exit initially
-            }
-            else
-            {
-                exitScript.UnlockExit(); // Show exit immediately
-            }
-        }
-        else
-        {
-            Debug.LogWarning("ExitBeam not found in the room!");
-        }
+        return exitScript;
     }
 
-    // Temporary method to simulate combat/tetris completion
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            GameObject exitPoint = currentRoom.transform.Find("ExitBeam")?.gameObject;
-            if (exitPoint != null)
-            {
-                RoomExit exitScript = exitPoint.GetComponent<RoomExit>();
-                exitScript.UnlockExit();
-                Debug.Log("Test: Exit unlocked manually!");
-            }
+            GameObject exitObj = currentRoom.transform.Find("ExitBeam")?.gameObject;
+            RoomExit exitScript = exitObj?.GetComponent<RoomExit>();
+            exitScript?.UnlockExit();
+            Debug.Log("Debug: Manually unlocked exit.");
         }
     }
 }

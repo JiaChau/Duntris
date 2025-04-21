@@ -6,25 +6,29 @@ public class RoomExit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Something entered the exit beam: " + other.name); // Debugging
-
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && exitUnlocked)
         {
-            Debug.Log("Player detected in exit beam.");
+            RoomManager.floorIndex++; // Always increment floorIndex first
 
-            if (exitUnlocked)
+            if (RoomManager.floorIndex >= 30)
             {
-                Debug.Log("Exit is unlocked, loading next room...");
-                FindObjectOfType<RoomManager>().LoadNextRoom();
+                var finishUI = FindObjectOfType<FinishGameUI>();
+                if (finishUI != null)
+                {
+                    finishUI.ShowFinishScreen();
+                    Debug.Log("[ROOMEXIT] Game completed. Showing finish screen.");
+                    return;
+                }
+                else
+                {
+                    Debug.LogWarning("[ROOMEXIT] FinishGameUI not found.");
+                }
             }
-            else
-            {
-                Debug.Log("Exit is still locked!");
-            }
+
+            FindObjectOfType<RoomManager>()?.LoadNextRoom();
         }
     }
 
-    // Unlock the exit beam
     public void UnlockExit()
     {
         exitUnlocked = true;
@@ -32,7 +36,6 @@ public class RoomExit : MonoBehaviour
         Debug.Log("Exit unlocked!");
     }
 
-    // Hide exit beam initially for combat/tetris rooms
     public void HideExit()
     {
         exitUnlocked = false;

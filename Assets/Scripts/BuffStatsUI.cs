@@ -10,6 +10,20 @@ public class BuffStatsUI : MonoBehaviour
     [Header("Buff Popup")]
     public TMP_Text buffPopupText;
 
+    private CanvasGroup canvasGroup;
+
+    private void Awake()
+    {
+        // Setup CanvasGroup
+        canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.interactable = false;
+
+        // Make all children ignore raycasts
+        if (statsText != null) statsText.raycastTarget = false;
+        if (buffPopupText != null) buffPopupText.raycastTarget = false;
+    }
+
     private void Start()
     {
         if (statPanelGroup != null)

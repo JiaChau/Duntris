@@ -22,6 +22,7 @@ public class MainMenuUI : MonoBehaviour
         WaveManager.totalRunTime = 0f;
 
         RoomManager.floorIndex = 0;
+        BlockGrid.cumulativeScore = 0; // ✅ Reset Tetris score when starting new game
 
         // Load game scene (replace with actual gameplay scene name)
         SceneManager.LoadScene("Game");

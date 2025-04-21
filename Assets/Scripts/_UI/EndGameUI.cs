@@ -7,25 +7,34 @@ public class EndGameUI : MonoBehaviour
     [Header("UI References")]
     public TMP_Text killsText;
     public TMP_Text timeText;
+    public TMP_Text tetrisScoreText; // Optional: assign in Inspector
     public GameObject endGamePanel;
     public GameObject restartButton;
     public GameObject mainMenuButton;
 
+    public static bool IsGameEnded = false;
+
     void Start()
     {
-        endGamePanel.SetActive(false);  // Hide the end game UI at start
+        endGamePanel.SetActive(false);  // Hide at start
     }
 
     public void ShowEndScreen()
     {
-        // Get the data from the WaveManager
+        IsGameEnded = true;
+        GameUIManager.IsUIOpen = true;
+        Time.timeScale = 0f;
+
         int kills = WaveManager.totalEnemiesKilled;
+        float time = WaveManager.totalRunTime;
+        int tetrisScore = BlockGrid.GetCumulativeScore();
 
-        // Set the kill and time text
-        killsText.text = "Total Kills: " + kills.ToString();
-        timeText.text = "Total Time: " + WaveManager.totalRunTime.ToString("F2") + "s";
+        killsText.text = "Total Kills: " + kills;
+        timeText.text = "Total Time: " + time.ToString("F2") + "s";
 
-        // Show the end game UI
+        if (tetrisScoreText != null)
+            tetrisScoreText.text = "Tetris Score: " + tetrisScore;
+
         endGamePanel.SetActive(true);
         restartButton.SetActive(true);
         mainMenuButton.SetActive(true);
@@ -33,10 +42,26 @@ public class EndGameUI : MonoBehaviour
 
     public void RestartGame()
     {
-        // Unpause the game
         Time.timeScale = 1f;
+        IsGameEnded = false;
+        GameUIManager.IsUIOpen = false;
 
-        // Reset game data
+        ResetGameStats();
+        SceneManager.LoadScene("Game");
+    }
+
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1f;
+        IsGameEnded = false;
+        GameUIManager.IsUIOpen = false;
+
+        ResetGameStats();
+        SceneManager.LoadScene("Menu");
+    }
+
+    private void ResetGameStats()
+    {
         WaveManager.CurrentWaveIndex = 0;
         WaveManager.RemainingWaves = 0;
         WaveManager.TotalWavesInRoom = 0;
@@ -45,14 +70,9 @@ public class EndGameUI : MonoBehaviour
         WaveManager.roomTime = 0f;
         WaveManager.totalRunTime = 0f;
         RoomManager.floorIndex = 0;
+        BlockGrid.cumulativeScore = 0;
 
-        // Reload game scene
-        SceneManager.LoadScene("Game");
-    }
-
-    public void GoToMainMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Menu");
+        if (BlockPlacementManager.Instance != null)
+            BlockPlacementManager.Instance.ClearSelected();
     }
 }
